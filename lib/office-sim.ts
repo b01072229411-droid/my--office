@@ -296,7 +296,7 @@ export class OfficeSim {
     this.say(ceo.name, text, "ceo", "대표");
     const ceoAgent = this.agent(ceo.id)!;
     if (ceoAgent.onstage) this.bubble(ceoAgent, text.length > 14 ? text.slice(0, 14) + "…" : text);
-    const target = this.depts.find((d) => text.includes(d.def.name) || text.includes(d.def.name.replace("팀", "")));
+    const target = this.depts.find((d) => [d.def.name, ...(d.def.aliases ?? [])].some((n) => text.includes(n)));
     const reply = (who: string, msg: string, delay = 700) => this.replies.push({ at: performance.now() + delay, who, text: msg });
     const leadOf = (d: DeptState) => this.members(d.def.id).find((m) => m.def.lead)!;
 
